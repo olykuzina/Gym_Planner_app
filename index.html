@@ -206,6 +206,7 @@ input[type=number]{width:60px;text-align:center;}
 /* OVERLAYS */
 .overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(10,10,12,.92);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
   padding:20px 16px;padding-bottom:calc(var(--safe-b)+20px);}
 .overlay.on{display:block;}
 .modal-box{background:var(--s1);border:1px solid var(--b1);border-radius:20px;padding:22px 18px;max-width:480px;margin:0 auto;}
@@ -389,7 +390,7 @@ input[type=number]{width:60px;text-align:center;}
 </div>
 
 <!-- WORKOUT SESSION (full screen list) -->
-<div id="ws" style="display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;">
+<div id="ws" style="display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;">
   <div style="display:flex;align-items:center;gap:10px;padding:14px 16px 12px;border-bottom:1px solid var(--b1);position:sticky;top:0;background:var(--bg);z-index:10;">
     <button style="background:none;border:none;color:var(--t2);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:0;" onclick="closeWs()">✕ Завершить</button>
     <div style="flex:1;text-align:center;">
@@ -498,12 +499,6 @@ async function checkPw(){
 if(sessionStorage.getItem('gym_auth')==='1'){
   document.getElementById('pw-screen').classList.add('hidden');
 } else {
-  // Блокируем скролл пока не авторизовались
-  document.body.style.overflow='hidden';
-  document.getElementById('pw-screen').addEventListener('transitionend',()=>{
-    document.body.style.overflow='';
-  });
-  // Фокус на поле пароля
   setTimeout(()=>document.getElementById('pw-input').focus(),300);
 }
 </script>
@@ -844,7 +839,6 @@ function showCw(){
   document.getElementById('cw-title').textContent=ph.wT;
   document.getElementById('cw-text').textContent=ph.wX;
   document.getElementById('cw-modal').classList.add('on');
-  document.body.style.overflow='hidden';
 }
 function dismissCw(){
   document.getElementById('cw-modal').classList.remove('on');
@@ -862,7 +856,6 @@ function openWsScreen(){
   pill.textContent=ph.name;pill.style.cssText=`background:${ph.bg};color:${ph.col};`;
   renderWsList(exes);
   document.getElementById('ws').style.display='block';
-  document.body.style.overflow='hidden';
 }
 
 function renderWsList(exesParam){
@@ -893,7 +886,6 @@ function renderWsList(exesParam){
 function closeWs(){
   if(!confirm('Завершить тренировку без сохранения?'))return;
   document.getElementById('ws').style.display='none';
-  document.body.style.overflow='';
 }
 
 function finishWs(){
@@ -913,7 +905,6 @@ function finishWs(){
   const log=getLog();log.push(entry);saveLog(log);
   clearInterval(tInt);tRun=false;
   document.getElementById('ws').style.display='none';
-  document.body.style.overflow='';
   renderAll();go('log');
 }
 
