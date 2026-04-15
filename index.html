@@ -471,7 +471,7 @@ input[type=number]{width:60px;text-align:center;}
 // ═══ PASSWORD PROTECTION ═══
 // Пароль хранится в виде хеша — менять здесь не нужно
 // Чтобы сменить пароль: введи новый пароль в hashPw() в консоли и замени PW_HASH
-const PW_HASH = '8e35c9de0e0c7d3e7cb7bd34fa1e4a7bfa07d80fbea2b16f08e58f1c3e66a47c';
+const PW_HASH = 'f70ba5430673836329571bc0619d96218188b4f03a20a9e8dae2ea28575cc005';
 
 async function hashPw(pw){
   const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw));
